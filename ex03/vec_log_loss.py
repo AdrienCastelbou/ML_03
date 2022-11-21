@@ -9,10 +9,9 @@ def vec_log_loss_(y, y_hat, eps=1e-15):
             return None
         if y.shape[1] != 1 or y.shape != y_hat.shape:
             return None
-        y_hat = y_hat + eps
         l = len(y)
         v_ones = np.ones((l, 1))
-        return - float(y.T.dot(np.log(y_hat)) + (v_ones - y).T.dot(np.log(v_ones - y_hat))) / l
+        return - float(y.T.dot(np.log(y_hat + eps)) + (v_ones - y).T.dot(np.log(v_ones - y_hat + eps))) / l
     except:
         return None
 
