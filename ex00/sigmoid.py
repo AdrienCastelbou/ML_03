@@ -7,10 +7,7 @@ def sigmoid_(x):
             return None
         if not len(x) or x.shape[1] != 1:
             return None
-        sig_x = np.zeros(x.shape)
-        for i in range(len(x)):
-            sig_x[i] = 1 / (1 + math.e ** -x[i])
-        return sig_x
+        return 1 / (1 + math.e ** -x)
     except:
         return None
 
