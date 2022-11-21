@@ -9,9 +9,8 @@ def log_loss_(y, y_hat, eps=1e-15):
             return None
         if y.shape[1] != 1 or y.shape != y_hat.shape:
             return None
-        y_hat = y_hat + eps
         l = len(y)
-        return -(np.sum(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat)) / l)
+        return -(np.sum(y * np.log(y_hat + eps) + (1 - y) * np.log(1 - y_hat + eps)) / l)
     except:
         return None
 
