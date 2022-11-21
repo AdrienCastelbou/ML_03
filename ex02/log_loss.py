@@ -7,7 +7,7 @@ def log_loss_(y, y_hat, eps=1e-15):
     try:
         if type(y) != np.ndarray or type(y_hat) != np.ndarray or type(eps) != float:
             return None
-        if y.shape[1] != 1 or y_hat.shape[1] != 1 or y.shape != y_hat.shape:
+        if y.shape[1] != 1 or y.shape != y_hat.shape:
             return None
         y_hat = y_hat + eps
         l = len(y)
