@@ -41,6 +41,7 @@ def engine_Y(Y_train, reference):
 
 def vizualize_preds(X, Y, pred):
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
+    fig.set_size_inches(10.5, 5.5)
     fig.suptitle("Predictions comparisions")
     ax1.scatter(X[:,0], Y, label="Real values")
     ax1.scatter(X[:,0], pred, label="Predictions")
@@ -60,21 +61,14 @@ def vizualize_preds(X, Y, pred):
     plt.show()
 
 def threshold_datas(y, threshold=0.5):
-    for i in range(len(y)):
-        if y[i] >= threshold:
-            print(y[i])
-            y[i] = 1
-        else:
-            y[i] = 0
-    print(len(y[y == 1]))
-    return y
-    y[ y >= threshold] = 1
+    y[y >= threshold] = 1
     y[y < threshold] = 0
     return y
 
+
 def perform_classification(X, Y, zipcode):
     X_train, X_test, Y_train, Y_test = data_spliter(X, Y, 0.8)
-    myLR = MyLogisticRegression(theta=np.random.rand(X_train.shape[1] + 1, 1).reshape(-1, 1), max_iter=1000)
+    myLR = MyLogisticRegression(theta=np.random.rand(X_train.shape[1] + 1, 1).reshape(-1, 1), max_iter=250000)
     Y_train = engine_Y(Y_train, zipcode)
     Y_HAT = myLR.predict_(X_train)
     print(myLR.loss_(y=Y_train, y_hat=Y_HAT))
@@ -84,8 +78,8 @@ def perform_classification(X, Y, zipcode):
     Y_HAT = myLR.predict_(X_test)
     Y_HAT = threshold_datas(Y_HAT)
     Y_test = engine_Y(Y_test, zipcode)
-    print(len(Y_test[Y_test == 1]), len(Y_test[Y_test == 0]), len(Y_HAT[Y_HAT == 1]), len(Y_HAT[Y_HAT == 0]))
-    #vizualize_preds(X_test, Y_test, Y_HAT)
+    print(f'Precision : {len(Y_HAT[Y_HAT == Y_test])} / {len(Y_HAT)}')
+    vizualize_preds(X_test, Y_test, Y_HAT)
 
 def main():
     try:
