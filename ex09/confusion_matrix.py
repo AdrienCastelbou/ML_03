@@ -29,6 +29,5 @@ def main_test():
     print(confusion_matrix(y, y_hat, ["bird", "dog"], df_option=True))
 
 
-
 if __name__ == "__main__":
     main_test()
